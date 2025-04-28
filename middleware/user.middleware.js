@@ -1,32 +1,17 @@
-// const { verifyJWT } = require("../utils/user.utils");
-
-// module.exports.isValidUser = async (req, res, next) => {
-//     let token = req.headers?.authorization;
-//     if (!token) {
-//         return res.send({ success: false, message: "please provide JWT" })
-//     }
-//     let decodedValue = verifyJWT(token)
-    
-//     req.user = decodedValue;
-
-//     if (decodedValue) {
-//         return next();
-//     } else {
-//         return res.send({ success: false, message: "Invalid JWT" })
-//     }
-// }
-const { verifyJWT } = require('../utils/user.utils');
+const { verifyJWT } = require("../utils/user.utils");
 
 module.exports.isValidUser = async (req, res, next) => {
-    const token = req.headers?.authorization;
+    let token = req.headers?.authorization;
     if (!token) {
-        return res.status(401).json({ success: false, message: "Please provide JWT" });
+        return res.send({ success: false, message: "please provide JWT" })
     }
-    const decodedValue = verifyJWT(token);
+    let decodedValue = verifyJWT(token)
+    
+    req.user = decodedValue;
+
     if (decodedValue) {
-        req.user = decodedValue;
         return next();
     } else {
-        return res.status(401).json({ success: false, message: "Invalid JWT" });
+        return res.send({ success: false, message: "Invalid JWT" })
     }
 }

@@ -39,39 +39,3 @@ app.post('/verify-otp', (req, res) => {
     }
 });
 
-// -----------------------------------------------------------
-// const nodemailer = require('nodemailer');
-
-// const transporter = nodemailer.createTransport({
-//   service: 'gmail',
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASS,
-//   },
-// });
-
-// const otpStore = {};
-
-// const sendOTP = async (email) => {
-//   const otp = Math.floor(100000 + Math.random() * 900000); // 6 digit OTP
-//   otpStore[email] = otp;
-
-//   await transporter.sendMail({
-//     from: process.env.EMAIL_USER,
-//     to: email,
-//     subject: 'Your OTP Code',
-//     html: `<h1>Your OTP is: ${otp}</h1>`,
-//   });
-
-//   return otp;
-// };
-
-// const verifyOTP = (email, otp) => {
-//   if (otpStore[email] && otpStore[email] == otp) {
-//     delete otpStore[email];
-//     return true;
-//   }
-//   return false;
-// };
-
-// module.exports = { sendOTP, verifyOTP };
