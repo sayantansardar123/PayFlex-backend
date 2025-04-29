@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 const express = require("express");
 const app = express.Router();
 
+const otpStore = {};
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
