@@ -10,8 +10,18 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+// app.use(cors());
 
+app.use(cors({
+    origin: [process.env.FRONTEND_URL], 
+    credentials: true,
+  }));
+  
+  // Debug logging middleware
+  app.use((req, res, next) => {
+    console.log(`${req.method} ${req.path}`);
+    next();
+  });
 connectDB();
 
 const usersRoute = require('./routes/user.route');
