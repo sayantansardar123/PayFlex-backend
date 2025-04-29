@@ -1,6 +1,6 @@
 const User = require('../model/user.model');
-// const { createJWTToken } = require('../utils/user.utils');
-const { createJWTToken, sendTokenByEmail } = require('../utils/user.utils');
+const { createJWTToken } = require('../utils/user.utils');
+// const { createJWTToken, sendTokenByEmail } = require('../utils/user.utils');
 
 
 module.exports.register = async (req, res) => {

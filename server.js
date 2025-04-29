@@ -1,17 +1,32 @@
-const express = require('express')
-const app = express();
-const connectDB = require('./db/db')
-let cors = require('cors')
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const connectDB = require('./db/db');
 
-app.use(express.urlencoded({ extended: true })) // middleware
+dotenv.config();
+
+const app = express();
+
+// Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 connectDB();
-app.use(cors())
 
-const usersRoute = require('./routes/user.route')
-app.use("/auth", usersRoute);
+const usersRoute = require('./routes/user.route');
+const mailRoutes = require('./utils/mail.utils'); 
 
-app.listen(5000, () => {
-    console.log("server is listening on port 5000 🚀");
-})
+// Routes Middleware
+app.use('/auth', usersRoute);     
+app.use('/mail', mailRoutes);     
+
+// Default route 
+app.get('/', (req, res) => {
+    res.send('PayFlex Backend API Running ✅');
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT} 🚀`);
+});

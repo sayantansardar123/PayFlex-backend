@@ -1,4 +1,6 @@
 const nodemailer = require('nodemailer');
+const express = require("express");
+const app = express.Router();
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -19,7 +21,7 @@ const transporter = nodemailer.createTransport({
         from: process.env.EMAIL_USER,
         to: email,
         subject: 'Your OTP Code',
-        html: <h1>Your OTP is: ${otp}</h1>,
+        text: `Your OTP is: ${otp}`,
       });
       res.status(200).json({ message: 'OTP sent to your email!' });
     } catch (error) {
@@ -38,4 +40,4 @@ app.post('/verify-otp', (req, res) => {
       res.status(400).json({ message: 'Invalid OTP.' });
     }
 });
-
+module.exports = app;
