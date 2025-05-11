@@ -2,9 +2,10 @@ const express = require('express');
 const {
   registerUser,
   loginUser,
-  getProfileDetails
+  getUserDetails
 } = require('../controller/users.contoller');
 const { isValidUser } = require('../middleware/user.middleware');
+const { isAuthenticatedUser } = require('../middleware/auth');
 
 
 const router = express.Router();
@@ -12,6 +13,7 @@ const router = express.Router();
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.get('/profile', isValidUser, getProfileDetails)
+//router.get('/profile', isValidUser, getProfileDetails);
+router.get('/userdetails', isAuthenticatedUser, getUserDetails);
 
 module.exports = router;

@@ -4,7 +4,6 @@ const {
   getAllBanks,
   createBankAccount
 } = require('../controller/bankAccountController');
-//const { isValidUser } = require('../middleware/user.middleware');
 
 
 const router = express.Router();

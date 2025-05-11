@@ -97,14 +97,18 @@ exports.getUserTransactions = async (req, res) => {
     })
     .sort({ createdAt: -1 });
 
-    const formattedTransactions = transactions.map(tx => ({
-      _id: tx._id,
-      from: tx.sender,
-      to: tx.receiver,
-      amount: tx.amount,
-      type: tx.sender.id.toString() === userId ? 'debit' : 'credit',
-      date: tx.createdAt
-    }));
+    const formattedTransactions = transactions.map((tx) => {
+      const senderId = tx.sender.id.toString();
+      return {
+        id: tx._id,
+        type: txnType = senderId === userId ? 'debit' : 'credit',
+        title: senderId === userId ? 'Paid to' : 'Received from',
+        name: senderId === userId ? tx.receiver.name : tx.sender.name,
+        amount: '₹' + tx.amount, 
+        time: tx.createdAt,
+        status: senderId === userId ? 'Debited from' : 'Credited to'
+      }
+    });
 
     res.status(200).send(formattedTransactions);
   } catch (err) {

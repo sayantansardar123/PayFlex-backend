@@ -4,7 +4,6 @@ const {
   sendMoney,
   getUserTransactions
 } = require('../controller/transactionController');
-//const { isValidUser } = require('../middleware/user.middleware');
 
 
 const router = express.Router();

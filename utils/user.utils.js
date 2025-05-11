@@ -1,14 +1,12 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+
+
 module.exports.createJWTToken = (_id, username, email) => {
-    let payload = {
-        _id,
-        username,
-        email,
-    }
+    let payload = { _id, username, email };
 
     let token = jwt.sign(payload, "my-secret", {
         expiresIn: "1d",
-    })
+    });
     console.log(token);
 
     return token;

@@ -5,7 +5,7 @@ module.exports.isValidUser = async (req, res, next) => {
     if (!token) {
         return res.send({ success: false, message: "please provide JWT" })
     }
-    let decodedValue = verifyJWT(token)
+    let decodedValue = verifyJWT(token);
     
     req.user = decodedValue;
 
