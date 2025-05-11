@@ -13,23 +13,28 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(cors());
 
 app.use(cors({
-    origin: [process.env.FRONTEND_URL, process.env.FRONTEND_HOST], 
-    credentials: true,
-  }));
+  origin: [process.env.FRONTEND_URL, process.env.FRONTEND_HOST], 
+  credentials: true,
+}));
   
-  // Debug logging middleware
-  app.use((req, res, next) => {
-    console.log(`${req.method} ${req.path}`);
-    next();
-  });
+// Debug logging middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
+
 connectDB();
 
 const usersRoute = require('./routes/user.route');
-const mailRoutes = require('./utils/mail.utils'); 
+const mailRoutes = require('./utils/mail.utils');
+const transactionRoutes = require('./routes/transactionRoute');
+const bankAccountRoutes = require('./routes/bankAccountRoutes');
 
 // Routes Middleware
-app.use('/auth', usersRoute);     
-app.use('/mail', mailRoutes);     
+app.use('/api/v1/auth', usersRoute);     
+app.use('/api/v1/mail', mailRoutes);     
+app.use('/api/v1', transactionRoutes);
+app.use('/api/v1', bankAccountRoutes);
 
 // Default route 
 app.get('/', (req, res) => {

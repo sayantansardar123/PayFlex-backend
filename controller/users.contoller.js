@@ -3,30 +3,39 @@ const { createJWTToken } = require('../utils/user.utils');
 // const { createJWTToken, sendTokenByEmail } = require('../utils/user.utils');
 
 
-module.exports.register = async (req, res) => {
-    let { username, email, password } = req.body;
+module.exports.registerUser = async (req, res) => {
+    let { username, email, phone, password } = req.body;
 
-    if (!username || !email || !password) {
+    if (!username || !email || !phone || !password) {
         res.status(400).json({ success: false, message: "All fields are required!" })
     }
     try {
-        let user = await User.findOne({ email: email })
-        if (user) {
+        let emailUser = await User.findOne({ email: email });
+        let phoneUser = await User.findOne({ phone: phone });
+
+        if (emailUser) {
            return  res.status(400).json({ success: false, message: "Email already exists!" })
         }
+        if (phoneUser) {
+            return  res.status(400).json({ success: false, message: "PhoneNo already exists!" })
+        }
+
         user = await User.create({
             username: username,
             email: email,
-            password: password,
-        })
+            phone: phone,
+            password: password
+        });
 
-        res.status(201).json({ success: true, message: `${user.username} Register Successfully! ✅` })
+        res.status(201).json({ success: true, message: `${user.username} Registered Successfully! ✅` })
     } catch (error) {
         console.error(error); //add
         res.status(500).json({ success: false, message: "Internal server problem" })
     }
 }
-module.exports.login = async (req, res) => {
+
+
+module.exports.loginUser = async (req, res) => {
     let { email, password } = req.body;
 
     if (!email || !password) {
@@ -54,7 +63,7 @@ module.exports.login = async (req, res) => {
     }
 }
 
-module.exports.profile = async (req, res) => {
+module.exports.getProfileDetails = async (req, res) => {
 
     // return res.send({ success: true, data: req.user })
     return res.status(200).json({ success: true, data: req.user });
