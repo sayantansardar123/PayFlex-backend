@@ -34,13 +34,13 @@ exports.getAllBanks = async (req, res, next) => {
 
 exports.createBankAccount = async (req, res, next) => {
   try {
-    const { userId, bankId, bankName } = req.body;
+    const { userId, bankId, bankName, logo } = req.body;
     let bankAccount = await BankAccount.findOne({ userId: userId });
     if (bankAccount) {
       return res.status(400).send({ message: "BankAccount of this user already exists." });
     }
 
-    const bankAccountObj = { userId, bankId, bankName };
+    const bankAccountObj = { userId, bankId, bankName, logo };
     bankAccount = await new BankAccount(bankAccountObj).save();
 
     res.status(200).send({ 

@@ -94,3 +94,19 @@ exports.getUserDetails = async (req, res, next) => {
     res.status(500).send({ message: error.message });
   }
 };
+
+
+exports.getUsernameFromId = async (req, res, next) => {
+  try {
+    const userData = await User.findOne({ _id: req.params.id });
+    if (!userData) {
+      return res.status(400).send({ message: "User not found" });
+    }
+    const { username, email, upiId } = userData;
+    const resultObj = { username, email, upiId };
+      
+    res.status(200).send(resultObj);
+  } catch(error) {
+    res.status(500).send({ message: error.message });
+  }
+}

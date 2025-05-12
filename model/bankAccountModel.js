@@ -15,6 +15,10 @@ const bankAccountSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  logo: {
+    type: String,
+    default: 'https://images.pexels.com/photos/730547/pexels-photo-730547.jpeg'
+  },
   balance: {
     type: Number,
     default: 0
