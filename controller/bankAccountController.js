@@ -52,3 +52,18 @@ exports.createBankAccount = async (req, res, next) => {
     res.status(500).send({ message: error.message });
   }
 };
+
+
+exports.getBankAccountsOfUser = async (req, res, next) => {
+  try {
+    const bankAccounts = await BankAccount.find({ userId: req.userId });
+    if (!bankAccounts) {
+      return res.status(400).send({ message: "Banks Not Found" });
+    }
+
+    res.status(200).send(bankAccounts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error.message });
+  }
+}
